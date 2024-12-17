@@ -1,3 +1,4 @@
+// Liste des images et des textes pour chaque diapositive
 const slides = [
     {
         "image": "slide1.jpg",
@@ -17,61 +18,68 @@ const slides = [
     }
 ];
 
-
+// Sélection des flèches et des points
 const leftArrow = document.querySelector('.arrow_left');
 const rightArrow = document.querySelector('.arrow_right');
 const dotsContainer = document.querySelector('.dots');
 
+// Diapositive actuelle
 let currentSlide = 0;
 
+// Mettre à jour l'image et le texte
 function updateBanner() {
     const bannerImg = document.querySelector('.banner-img');
     const bannerTagline = document.querySelector('#banner p');
     let imagePath = "./assets/images/slideshow/";
     let imageName = slides[currentSlide].image;
-    bannerImg.src = imagePath + imageName;
-    bannerTagline.innerHTML = slides[currentSlide].tagLine;
+    bannerImg.src = imagePath + imageName; // Changer l'image
+    bannerTagline.innerHTML = slides[currentSlide].tagLine; // Changer le texte
 }
 
+// Ajouter les petits points (dots)
 function addDots() {
     for (let i = 0; i < slides.length; i++) {
         const dot = document.createElement('div');
         dot.classList.add('dot');
         if (i === 0) {
-            dot.classList.add('dot_selected');
+            dot.classList.add('dot_selected'); // Sélectionner le premier point
         }
         dotsContainer.appendChild(dot);
     }
 }
 
+// Mettre à jour les points
 function updateDots() {
     const dots = document.querySelectorAll('.dot');
     for (let i = 0; i < dots.length; i++) {
         if (i === currentSlide) {
-            dots[i].classList.add('dot_selected');
+            dots[i].classList.add('dot_selected'); // Activer le point actuel
         } else {
-            dots[i].classList.remove('dot_selected');
+            dots[i].classList.remove('dot_selected'); // Désactiver les autres points
         }
     }
 }
 
+// Quand on clique sur la flèche gauche
 leftArrow.addEventListener('click', () => {
-    currentSlide--;
+    currentSlide--; // Aller à la diapositive précédente
     if (currentSlide < 0) {
-        currentSlide = slides.length - 1;
+        currentSlide = slides.length - 1; // Retourner à la dernière image
     }
     updateBanner();
     updateDots();
 });
 
+// Quand on clique sur la flèche droite
 rightArrow.addEventListener('click', () => {
-    currentSlide++;
+    currentSlide++; // Aller à la diapositive suivante
     if (currentSlide >= slides.length) {
-        currentSlide = 0;
+        currentSlide = 0; // Retourner à la première image
     }
     updateBanner();
     updateDots();
 });
 
+// Ajouter les points et afficher la première image
 addDots();
 updateBanner();
